@@ -1,0 +1,20 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Data (don't commit large datasets)
+data/common_voice/
+data/asvspoof/
+data/synthetic/
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.cursor/
+
+# Secrets
+.env
