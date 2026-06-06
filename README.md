@@ -13,11 +13,20 @@ This repository currently contains an audio exploration script that:
 - saves a waveform/spectrogram visualization
 - loads a pretrained Wav2Vec2 model for speech embeddings
 
-The next milestone is turning this exploration into an end-to-end baseline detector:
+It also includes the first baseline detector pipeline:
+
+- audio loading, mono conversion, resampling, and normalization
+- acoustic feature extraction
+- CSV manifest loading
+- sklearn baseline training and evaluation scripts
+
+The current pipeline shape is:
 
 ```text
 audio file -> preprocessing -> acoustic features / speech embeddings -> classifier -> risk score + explanation
 ```
+
+The starter manifest only contains one generated test-tone sample, so it is not enough to train a real classifier yet. The next milestone is adding real and synthetic speech examples.
 
 ## Planned System
 
@@ -63,20 +72,41 @@ The demo will aim to show:
 
 ```text
 data/
+  manifest.csv          Starter labeled manifest
   samples/              Small local sample audio files
 docs/
   research_writeup.md   Living design and research notes
 notebooks/
   01_audio_basics.py    Initial audio feature and Wav2Vec2 exploration
-src/                    Detector implementation will live here
+src/
+  audio_io.py           Audio loading and normalization
+  dataset.py            Manifest loading and feature matrix construction
+  evaluate.py           Single-file scoring with a trained model
+  features.py           Baseline acoustic feature extraction
+  train.py              Baseline model training and metrics
+```
+
+## Usage
+
+Extract features and attempt baseline training from the starter manifest:
+
+```bash
+python -m src.train --manifest data/manifest.csv
+```
+
+The command currently exits with a clear message because the starter manifest has only one label. Once real and synthetic speech examples are added, it will train a baseline model and save it to `models/baseline.joblib`.
+
+Score a file after training:
+
+```bash
+python -m src.evaluate path/to/audio.wav --model models/baseline.joblib
 ```
 
 ## Roadmap
 
-1. Build audio loading and normalization utilities.
-2. Create a labeled dataset manifest for real and synthetic clips.
-3. Extract baseline acoustic features.
-4. Train and evaluate a simple classifier.
-5. Add Wav2Vec2 embedding features.
-6. Build an interactive demo with risk scoring and spectrogram visualization.
-7. Document results, limitations, and future work.
+1. Add real and synthetic speech clips to the dataset manifest.
+2. Train and evaluate the first simple classifier.
+3. Report baseline metrics in the README and research writeup.
+4. Add Wav2Vec2 embedding features.
+5. Build an interactive demo with risk scoring and spectrogram visualization.
+6. Document results, limitations, and future work.

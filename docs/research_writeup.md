@@ -42,6 +42,8 @@ audio input
   -> output risk score and explanation signals
 ```
 
+The repository now includes the first implementation of this baseline pipeline: audio loading, acoustic feature extraction, manifest loading, and sklearn training/evaluation scripts. The current starter manifest contains only a generated test tone, so it verifies the pipeline shape but does not yet support real model training.
+
 ## Feature Rationale
 
 MFCCs are a standard compact representation of speech timbre and spectral envelope. They are useful as a baseline because many synthetic artifacts appear in frequency-domain speech structure.

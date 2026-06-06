@@ -8,6 +8,7 @@ __pycache__/
 data/common_voice/
 data/asvspoof/
 data/synthetic/
+models/
 
 # OS
 .DS_Store
